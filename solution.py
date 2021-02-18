@@ -8,7 +8,8 @@ def webServer(port=13331):
     # Fill in start
 
     serverSocket = socket(AF_INET, SOCK_STREAM)
-    serverSocket.bind((gethostname(), 13331))
+    port = 13331
+    serverSocket.bind(('', port))
     serverSocket.listen(5)
 
     # Fill in end

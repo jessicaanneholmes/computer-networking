@@ -1,31 +1,61 @@
-### welcome_assignment_answers
-### Input - All eight questions given in the assignment.
-### Output - The right answer for the specific question.
+# import socket module
+from socket import *
+import sys  # In order to terminate the program
 
-def welcome_assignment_answers(question):
-    #The student doesn't have to follow the skeleton for this assignment.
-    #Another way to implement is using a "case" statements similar to C.
-    if question == "Are encoding and encryption the same? - Yes/No":
-        answer = str("No")
-    elif question == "Is it possible to decrypt a message without a key? - Yes/No":
-        answer = str("Yes")
-    elif question ==  ("Is it possible to decode a message without a key? - Yes/No"):
-        answer = str("Yes")
-    elif question == ("Is a hashed message supported to be un-hashed? - Yes/No"):
-        answer = str("No")
-    elif question == ("What is the MD5 hashing value to the following message: 'NYU Computer Networking' - Use MD5 hash generator and use the answer in your code"):
-        answer = str("65fc2f78620c22cc1f483c7d7201b592")
-    elif question == ("Is MD5 a secured hashing algorithm? - Yes/No"):
-        answer = str("Yes")
-    elif question == ("What layer from the TCP/IP model the protocol DHCP belongs to? - The answer should be a numberic number"):
-        answer = int(4)
-    elif question == ("What layer of the TCP/IP model the protocol TCP belongs to? - The answer should be a numeric number"):
-        answer = int(3)
-    return(answer)
-# Complete all the questions.
+
+def webServer(port=13331):
+    # Prepare a server socket
+    # Fill in start
+
+    serverSocket = socket(AF_INET, SOCK_STREAM)
+    port = 13331
+    serverSocket.bind(('', port))
+    serverSocket.listen(1)
+
+    # Fill in end
+
+    while True:
+        # Establish the connection
+        print('Ready to serve...')
+        connectionSocket, addr = serverSocket.accept()
+        # Fill in start       #Fill in end
+        try:
+            message = connectionSocket.recv(1024)  # Fill in start    #Fill in end
+            filename = message.split()[1]
+            f = open(filename[1:])
+            outputdata = 'HTTP/1.1 200 OK\n'
+            # Fill in start     #Fill in end
+            # Send one HTTP header line into socket
+            connectionSocket.send(message)
+            # Fill in start
+
+            # Fill in end
+
+            # Send the content of the requested file to the client
+            for i in range(0, len(outputdata)):
+                connectionSocket.send(outputdata[i].encode())
+
+            connectionSocket.send("\r\n".encode())
+            connectionSocket.close()
+        except IOError:
+            error = 'HTTP/1.1 404 Not Found\n\n'
+            connectionSocket.send(error.encode())
+            connectionSocket.close()
+
+        # Send response message for file not found (404)
+        # Fill in start
+
+        # Fill in end
+
+        # Close client socket
+
+        # Fill in start
+
+        # Fill in end
+
+    serverSocket.close()
+    sys.exit()  # Terminate the program after sending the corresponding data
 
 
 if __name__ == "__main__":
-    #use this space to debug and verify that the program works
-    debug_question = "Are encoding and encryption the same? - Yes/No"
-    print(welcome_assignment_answers(debug_question))
+    webServer(13331)

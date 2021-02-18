@@ -8,9 +8,8 @@ def webServer(port=13331):
     # Fill in start
 
     serverSocket = socket(AF_INET, SOCK_STREAM)
-    port = 13331
-    serverSocket.bind(('', port))
-    serverSocket.listen(1)
+    serverSocket.bind((gethostname(), 13331))
+    serverSocket.listen(5)
 
     # Fill in end
 
@@ -20,13 +19,13 @@ def webServer(port=13331):
         connectionSocket, addr = serverSocket.accept()
         # Fill in start       #Fill in end
         try:
-            message = connectionSocket.recv(1024)  # Fill in start    #Fill in end
+            message = connectionSocket.recv(4096).decode()  # Fill in start    #Fill in end
             filename = message.split()[1]
             f = open(filename[1:])
-            outputdata = 'HTTP/1.1 200 OK\n' 
+            outputdata = 'HTTP/1.1 200 OK'
             # Fill in start     #Fill in end
             # Send one HTTP header line into socket
-            serverSocket.send(message)
+            connectionSocket.sendall(message.encode())
             # Fill in start
             # Fill in end
             # Send the content of the requested file to the client
@@ -39,12 +38,13 @@ def webServer(port=13331):
             # Send response message for file not found (404)
             # Fill in start
             # Fill in end
-            error = 'HTTP/1.1 404 Not Found\n\n'
-            connectionSocket.send(error.encode())
+            error = 'HTTP/1.1 404 Not Found'
+            connectionSocket.sendall(error.encode())
             # Close client socket
             # Fill in start
             # Fill in end
             connectionSocket.close()
+
     serverSocket.close()
     sys.exit()  # Terminate the program after sending the corresponding data
 

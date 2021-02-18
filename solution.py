@@ -20,19 +20,18 @@ def webServer(port=13331):
         connectionSocket, addr = serverSocket.accept()
         # Fill in start       #Fill in end
         try:
-            message = connectionSocket.recv(4096).decode()  # Fill in start    #Fill in end
+            message = connectionSocket.recv(5000).decode()  # Fill in start    #Fill in end
             filename = message.split()[1]
             f = open(filename[1:])
             outputdata = 'HTTP/1.1 200 OK'
             # Fill in start     #Fill in end
             # Send one HTTP header line into socket
-            connectionSocket.sendall(message.encode())
+            serverSocket.sendall(outputdata.encode())
             # Fill in start
             # Fill in end
             # Send the content of the requested file to the client
             for i in range(0, len(outputdata)):
                 connectionSocket.send(outputdata[i].encode())
-
             connectionSocket.send("\r\n".encode())
             connectionSocket.close()
         except IOError:

@@ -12,6 +12,8 @@ def smtp_client(port=1025, mailserver='127.0.0.1'.encode()):
     # Fill in start
 
     clientSocket = socket(AF_INET, SOCK_STREAM)
+    mailserver = '127.0.0.1'.encode()
+    port = 1025
     clientSocket.connect((mailserver, port))
     # clientSocket.bind((mailserver, port))
     # clientSocket.listen(1)
@@ -87,7 +89,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'.encode()):
         #print('221 reply not received from server.')
     # Fill in end
 
-    #clientSocket.close()
+    clientSocket.close()
 
 
 if __name__ == '__main__':

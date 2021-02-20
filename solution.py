@@ -9,18 +9,10 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
 
     # Create socket called clientSocket and establish a TCP connection with mailserver and port
 
-    mailserver = ('127.0.0.1', 1025)
-    clientSocket = create_connection(mailserver)
-    
     # Fill in start
-
-    #clientSocket = socket(AF_INET, SOCK_STREAM)
-
-    #clientSocket.bind(mailserver)
-    #clientSocket.listen()
-
-
-    #clientSocket.connect(('127.0.0.1', 1025))
+    mailserver = ('127.0.0.1', 1025)
+    clientSocket = socket(AF_INET, SOCK_STREAM)
+    clientSocket.connect(mailserver)
 
 
     recv = clientSocket.recv(1024).decode()
@@ -68,6 +60,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
 
     # Send message data.
     # Fill in start
+    msg = "\r\n My message"
     clientSocket.send(msg.encode())
     #print(recv5)
     #if recv5[:3] != '250':
@@ -76,6 +69,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
 
     # Message ends with a single period.
     # Fill in start
+    endmsg = "\r\n.\r\n"
     clientSocket.send(endmsg.encode())
     recv6 = clientSocket.recv(1024).decode()
     #print(recv6)
